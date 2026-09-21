@@ -9,7 +9,7 @@ SentinelForge is an integrated, offline-first security operations platform combi
 - Multi-source ingestion: JSON/CSV/line-oriented logs, REST endpoints, and deterministic streaming simulation.
 - Common event schema with validation, deduplication, source metadata, and processing timestamps.
 - Threat intelligence adapters for VirusTotal, AbuseIPDB, and AlienVault OTX with TTL JSON caching and safe offline fallback.
-- Isolation Forest anomaly detection plus a supervised Random Forest classifier trained from reproducible synthetic security telemetry.
+- Week 5 pretrained Isolation Forest and StandardScaler artifacts integrated against the original `dur`, `spkts`, `dpkts`, `sbytes`, `dbytes`, and `rate` feature contract, plus a supervised Random Forest classifier for the capstone confidence layer.
 - SOAR policies with automated high-confidence playbooks, analyst approval for medium confidence, notification audit records, and case management.
 - Streamlit + Plotly dashboard with KPIs, alert timeline, confidence distribution, threat map, event drill-down, analyst queue, and playbook status.
 - Architecture and engineering review documents, tests, sample data, a resume update, and presentation source.
@@ -25,6 +25,8 @@ streamlit run dashboard.py
 ```
 
 The full mode writes evidence to `runtime/` and uses no external API keys by default. Optional live TI keys can be placed in environment variables (`VIRUSTOTAL_API_KEY`, `ABUSEIPDB_API_KEY`, `OTX_API_KEY`). Never commit real secrets.
+
+The Week 5 artifacts are stored in `models/week5/` and are loaded automatically by the ML detector. If those artifacts are unavailable, the detector has a documented synthetic fallback for portability.
 
 ## Commands
 

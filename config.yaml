@@ -13,6 +13,7 @@ storage:
   audit_file: runtime/audit.jsonl
 ml:
   model_dir: models
+  week5_model_dir: models/week5
   contamination: 0.12
   random_state: 42
   retrain: true
