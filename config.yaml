@@ -23,8 +23,8 @@ threat_intelligence:
   request_timeout_seconds: 8
   offline_mode: true
 soar:
-  auto_execute_threshold: 0.82
-  analyst_review_threshold: 0.55
+  auto_execute_threshold: 0.70
+  analyst_review_threshold: 0.45
   notification_mode: audit_only
   playbooks:
     - name: isolate_suspicious_host
