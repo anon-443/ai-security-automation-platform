@@ -1,0 +1,20 @@
+flowchart LR
+  A[Files / REST APIs / Stream simulator] --> B[Ingestion + schema validation]
+  B --> C[(Normalized JSONL / future queue)]
+  C --> D[TI enrichment adapters]
+  D --> E[(TTL cache)]
+  D --> F[Risk score + evidence]
+  F --> G[Isolation Forest + supervised classifier]
+  G --> H{Confidence policy}
+  H -->|High| I[SOAR playbook]
+  H -->|Medium| J[Analyst review queue]
+  H -->|Low| K[Close + audit]
+  I --> L[(Cases + audit log)]
+  J --> L
+  K --> L
+  C --> M[Streamlit dashboard]
+  F --> M
+  G --> M
+  L --> M
+  N[VT / AbuseIPDB / OTX] -. optional TLS .-> D
+  O[OIDC/RBAC + TLS + secrets manager] -. production controls .-> M

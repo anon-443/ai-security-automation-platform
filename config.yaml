@@ -1,0 +1,34 @@
+app:
+  name: SentinelForge
+  environment: demo
+  log_level: INFO
+  timezone: UTC
+storage:
+  runtime_dir: runtime
+  cache_file: runtime/ti_cache.json
+  events_file: runtime/events.jsonl
+  enriched_file: runtime/enriched_events.jsonl
+  alerts_file: runtime/alerts.jsonl
+  cases_file: runtime/cases.jsonl
+  audit_file: runtime/audit.jsonl
+ml:
+  model_dir: models
+  contamination: 0.12
+  random_state: 42
+  retrain: true
+threat_intelligence:
+  enabled_sources: [offline, virustotal, abuseipdb, otx]
+  cache_ttl_seconds: 86400
+  request_timeout_seconds: 8
+  offline_mode: true
+soar:
+  auto_execute_threshold: 0.82
+  analyst_review_threshold: 0.55
+  notification_mode: audit_only
+  playbooks:
+    - name: isolate_suspicious_host
+      trigger: high_confidence
+      action: create_case_and_isolation_recommendation
+    - name: analyst_triage
+      trigger: medium_confidence
+      action: create_analyst_queue_case
