@@ -50,7 +50,9 @@ class MLDetector:
         else:
             X=self.scaler.transform(raw_X) if self.scaler is not None else raw_X
         raw=float(-self.iso.decision_function(X)[0]); anomaly=float(max(0,min(1,.5+raw)))
-        supervised=float(self.clf.predict_proba(X)[0][1]); confidence=round(min(1, .55*anomaly+.45*supervised),3)
+        supervised=float(self.clf.predict_proba(X)[0][1])
+        intel_signal=float(event.get('ti_score', 0.0)); action_signal=0.92 if event.get('action') in SUSPICIOUS else 0.0
+        confidence=round(min(1, .38*anomaly+.22*supervised+.25*intel_signal+.15*action_signal),3)
         return {**event,'features':dict(zip(FEATURES,self.vectorize(event))), 'model_source':self.model_source, 'anomaly_score':round(anomaly,3),'supervised_score':round(supervised,3),'confidence':confidence,'prediction':'threat' if confidence>=.55 else 'benign','alert_severity':risk_band(confidence),'detected_at':utc_now()}
 
 def detect_events(events:list[dict[str,Any]],cfg:dict[str,Any],output:str)->list[dict[str,Any]]:
